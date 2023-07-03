@@ -40,6 +40,7 @@ class ColoredPoint:
         if isinstance(other, ColoredPoint):
             return self._fields == other._fields
         return NotImplemented
+    
     def __hash__(self):
         return hash(self._fields)
     
