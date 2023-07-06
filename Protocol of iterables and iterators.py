@@ -100,3 +100,42 @@ class SkipIterator:
             raise StopIteration
         else:
             return self.iterable[self._index]
+
+
+
+# Класс RandomLooper
+# Реализуйте класс RandomLooper. При создании экземпляра класс должен принимать произвольное
+# количество позиционных аргументов, каждый из которых является итерируемым объектом.
+
+# Экземпляр класса RandomLooper должен являться итератором, который генерирует в случайном порядке
+# все элементы всех итерируемых объектов, переданных в конструктор, а затем возбуждает исключение
+# StopIteration.
+
+# Примечание 1. Порядок элементов в возвращаемом итераторе необязательно должен совпадать с их
+# порядком в тестовых данных.
+
+# Примечание 2. Дополнительная проверка данных на корректность не требуется. Гарантируется, что
+# реализованный класс используется только с корректными данными.
+
+# Примечание 3. Класс RandomLooper должен удовлетворять протоколу итератора, то есть иметь методы
+# __iter__() и __next__(). Реализация же протокола может быть произвольной.
+
+from random import shuffle
+
+class RandomLooper:
+    def __init__(self, *args):
+        self.iterables = args
+        self.flatten_iterables = [item for iterable in self.iterables for item in iterable]
+        shuffle(self.flatten_iterables)
+        self.index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.index < len(self.flatten_iterables):
+            item = self.flatten_iterables[self.index]
+            self.index += 1
+            return item
+        else:
+            raise StopIteration
